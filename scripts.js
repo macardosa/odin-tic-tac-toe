@@ -1,7 +1,11 @@
 // logic for gameboard
 const gameboard = (function () {
     const numberOfRows = 3;
-    const grid = Array.from({ length: numberOfRows }, () => Array.from({ length: numberOfRows }, () => ""));
+    let grid = null;
+
+    function start() {
+        grid = Array.from({ length: numberOfRows }, () => Array.from({ length: numberOfRows }, () => ""));
+    }
 
     function toString() {
         return grid
@@ -19,6 +23,10 @@ const gameboard = (function () {
         }
 
         grid[i][j] = symbol;
+    }
+
+    function getNumRows() {
+        return numberOfRows;
     }
 
     function getValue(i, j) {
@@ -69,7 +77,9 @@ const gameboard = (function () {
         toString,
         setValue,
         getValue,
-        gameOver
+        gameOver,
+        start,
+        getNumRows,
     }
 })();
 
@@ -96,9 +106,12 @@ const ticTacToe = (() => {
         const statusBox = document.querySelector(".status-box");
 
         function displayGrid() {
+            board.style.display = "grid";
+            statusBox.style.display = "block";
             Array.from(board.children).forEach((child, index) => {
-                const [i, j] = [index % 3, Math.floor(index / 3)];
-                child.textContent = gameboard.getValue(i, j);
+                const row = index % gameboard.getNumRows();
+                const col = Math.floor(index / gameboard.getNumRows());
+                child.textContent = gameboard.getValue(row, col);
             });
         }
 
@@ -129,6 +142,7 @@ const ticTacToe = (() => {
         currentPlayerId = Math.floor(Math.random() * 2);
         nextPlayerId = (currentPlayerId === 0) ? 1 : 0;
         playing = true;
+        gameboard.start();
         DOM.displayGrid();
         DOM.setDisplayMessage(`Turn: ${players[currentPlayerId].name} (${players[currentPlayerId].symbol})`);
     }
@@ -139,10 +153,11 @@ const ticTacToe = (() => {
     }
 
     function play() {
-        const {status, result} = gameboard.gameOver();
+        const { status, result } = gameboard.gameOver();
         if (status) {
             console.log(gameboard.toString());
-            DOM.setDisplayMessage(`Game Over!\n Winner is ${result}`);
+            DOM.setDisplayMessage(`Game Over!
+                Winner is ${result}`);
             playing = false;
             return;
         }
@@ -156,10 +171,8 @@ const ticTacToe = (() => {
 
 })();
 
-// test
-// gameboard.setValue(0, 0, "X");
-// gameboard.setValue(1, 1, "X");
-// gameboard.setValue(2, 2, "X");
-
-ticTacToe.start();
-// ticTacToe.play();
+// logic to manage the application from the webpage
+document.querySelector(".play-btn")
+    .addEventListener("click", () => {
+        ticTacToe.start();
+    });

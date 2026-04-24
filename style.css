@@ -18,16 +18,19 @@ body {
 }
 
 .status-box {
+    display: none;
     font-size: 1.8rem;
-    background-color: rgb(235, 153, 46);
+    background-color: rgb(205, 173, 131);
     color: white;
     padding: 5px;
+    width: 300px;
+    border-radius: 20px;
+    text-align: center;
 }
 
 .game-board {
-    display: grid;
-    /* width: 300px; */
-    /* height: 300px; */
+    /* display: grid; */
+    display: none;
     grid-template-columns: repeat(3, 1fr);
     background-color: navy;
     box-shadow: white 10px 10px 12px;
@@ -51,4 +54,20 @@ body {
 .game-board .cell:hover {
     opacity: 1 !important;
     transform: scale(1.05);
+}
+
+.play-btn {
+    width: 80px;
+    background: yellow;
+    border: rgb(1, 42, 1) solid 2px;
+    border-radius: 20px;
+    text-align: center;
+    padding: 4px 8px;
+    color: rgb(1, 42, 1);
+    font-weight: bold;
+}
+
+.play-btn:hover {
+    transform: scale(1.05);
+    cursor: pointer;
 }
