@@ -1,0 +1,51 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.status-box {
+    font-size: 1.8rem;
+    background-color: rgb(235, 153, 46);
+    color: white;
+    padding: 5px;
+}
+
+.game-board {
+    display: grid;
+    width: 300px;
+    height: 300px;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: navy; 
+    /* margin-block: 30px; */
+}
+
+.cell {
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4.0rem;
+    color: gold;
+}
+
+.game-board:has(.cell:hover) .cell {
+    opacity: 0.3;
+}
+
+.game-board .cell:hover {
+    opacity: 1 !important;
+    transform: scale(1.05);
+}
