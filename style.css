@@ -14,6 +14,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    background-color: rgb(229, 225, 225);
 }
 
 .status-box {
@@ -25,14 +26,16 @@ body {
 
 .game-board {
     display: grid;
-    width: 300px;
-    height: 300px;
+    /* width: 300px; */
+    /* height: 300px; */
     grid-template-columns: repeat(3, 1fr);
-    background-color: navy; 
-    /* margin-block: 30px; */
+    background-color: navy;
+    box-shadow: white 10px 10px 12px;
 }
 
 .cell {
+    width: 100px;
+    height: 100px;
     border: 1px solid white;
     display: flex;
     justify-content: center;

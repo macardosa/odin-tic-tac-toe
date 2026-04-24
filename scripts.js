@@ -35,26 +35,26 @@ const gameboard = (function () {
                 return { status: false };
 
             // main diagonal
-            case grid[0][0] === grid[1][1] && grid[1][1] === grid[2][2]:
+            case grid[0][0] !== "" && grid[0][0] === grid[1][1] && grid[1][1] === grid[2][2]:
                 return { status: true, result: grid[0][0] };
 
             // secondary diagonal
-            case grid[2][0] === grid[1][1] && grid[1][1] === grid[0][2]:
+            case grid[2][0] !== "" && grid[2][0] === grid[1][1] && grid[1][1] === grid[0][2]:
                 return { status: true, result: grid[2][0] };
             // rows
-            case grid[0][0] === grid[0][1] && grid[0][1] === grid[0][2]:
+            case grid[0][0] !== "" && grid[0][0] === grid[0][1] && grid[0][1] === grid[0][2]:
                 return { status: true, result: grid[0][0] };
-            case grid[1][0] === grid[1][1] && grid[1][1] === grid[1][2]:
+            case grid[1][0] !== "" && grid[1][0] === grid[1][1] && grid[1][1] === grid[1][2]:
                 return { status: true, result: grid[1][0] };
-            case grid[2][0] === grid[2][1] && grid[2][1] === grid[2][2]:
+            case grid[2][0] !== "" && grid[2][0] === grid[2][1] && grid[2][1] === grid[2][2]:
                 return { status: true, result: grid[2][0] };
 
             // columns
-            case grid[0][0] === grid[1][0] && grid[1][0] === grid[2][0]:
+            case grid[0][0] !== "" && grid[0][0] === grid[1][0] && grid[1][0] === grid[2][0]:
                 return { status: true, result: grid[0][0] };
-            case grid[0][1] === grid[1][1] && grid[1][1] === grid[2][1]:
+            case grid[0][1] !== "" && grid[0][1] === grid[1][1] && grid[1][1] === grid[2][1]:
                 return { status: true, result: grid[0][1] };
-            case grid[0][2] === grid[1][2] && grid[1][2] === grid[2][2]:
+            case grid[0][2] !== "" && grid[0][2] === grid[1][2] && grid[1][2] === grid[2][2]:
                 return { status: true, result: grid[0][2] };
 
             case grid.flat().includes(""):
@@ -80,15 +80,6 @@ function Player(name, symbol) {
     this.score = 0;
 }
 
-Player.prototype.play = function () {
-    const [row, col] = prompt(`${this.name}: `).split(/\s+/);
-    return { row, col };
-}
-
-Player.prototype.getSymbol = function() {
-    return this.symbol;
-}
-
 // logic for game controller
 const ticTacToe = (() => {
     const players = [
@@ -97,6 +88,7 @@ const ticTacToe = (() => {
     ];
     let currentPlayerId = 0;
     let nextPlayerId = 1;
+    let playing = false;
 
     // display/DOM logic
     const DOM = (function () {
@@ -111,22 +103,23 @@ const ticTacToe = (() => {
         }
 
         board.addEventListener("click", (e) => {
-            const symbol = players[currentPlayerId].getSymbol();
+            const symbol = players[currentPlayerId].symbol;
             const cell = e.target;
-            if (cell.textContent === "") {
+            if (playing && cell.textContent === "") {
                 cell.textContent = symbol;
                 const [i, j] = cell.id.slice(-3).split("-").map(x => Number(x));
                 gameboard.setValue(i, j, symbol);
+                ticTacToe.play();
             }
         });
 
-        function setCurrentPlayer(name) {
-            statusBox.textContent = `Turn: ${name}`;
+        function setDisplayMessage(message) {
+            statusBox.textContent = message;
         }
 
         return {
             displayGrid,
-            setCurrentPlayer,
+            setDisplayMessage,
         }
 
     })();
@@ -134,16 +127,26 @@ const ticTacToe = (() => {
     function start() {
         console.log("Welcome to Tic Tac Toe");
         currentPlayerId = Math.floor(Math.random() * 2);
+        nextPlayerId = (currentPlayerId === 0) ? 1 : 0;
+        playing = true;
         DOM.displayGrid();
-        DOM.setCurrentPlayer(players[currentPlayerId].name);
+        DOM.setDisplayMessage(`Turn: ${players[currentPlayerId].name} (${players[currentPlayerId].symbol})`);
+    }
+
+    function switchPlayers() {
+        [currentPlayerId, nextPlayerId] = [nextPlayerId, currentPlayerId];
+        DOM.setDisplayMessage(`Turn: ${players[currentPlayerId].name} (${players[currentPlayerId].symbol})`);
     }
 
     function play() {
-        nextPlayerId = (currentPlayerId === 0) ? 1 : 0;
-        while (gameboard.gameOver().status === false) {
-            currentPlayerId = nextPlayerId;
-            console.log("hello");
+        const {status, result} = gameboard.gameOver();
+        if (status) {
+            console.log(gameboard.toString());
+            DOM.setDisplayMessage(`Game Over!\n Winner is ${result}`);
+            playing = false;
+            return;
         }
+        switchPlayers();
     }
 
     return {
@@ -154,9 +157,9 @@ const ticTacToe = (() => {
 })();
 
 // test
-gameboard.setValue(0, 0, "X");
-gameboard.setValue(1, 1, "X");
-gameboard.setValue(2, 2, "X");
+// gameboard.setValue(0, 0, "X");
+// gameboard.setValue(1, 1, "X");
+// gameboard.setValue(2, 2, "X");
 
 ticTacToe.start();
-ticTacToe.play();
+// ticTacToe.play();
