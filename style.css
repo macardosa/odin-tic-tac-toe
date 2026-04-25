@@ -206,8 +206,14 @@ body {
     margin-block-end: 10px;
 }
 
+h1 {
+    text-decoration: underline;
+}
 footer {
-    background-color: white;
+    color: rgb(67, 67, 67);
+    width: 100vw;
+    padding-block: 10px;
+    text-align: center;
 }
 
 .start-btn {
