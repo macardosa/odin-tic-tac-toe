@@ -9,19 +9,56 @@
     <script src="./scripts.js" type="module"></script>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
-    <div class="play-btn">Play!</div>
-    <div class="game-board">
-        <div class="cell" id="cell-0-0"></div>
-        <div class="cell" id="cell-0-1"></div>
-        <div class="cell" id="cell-0-2"></div>
-        <div class="cell" id="cell-1-0"></div>
-        <div class="cell" id="cell-1-1"></div>
-        <div class="cell" id="cell-1-2"></div>
-        <div class="cell" id="cell-2-0"></div>
-        <div class="cell" id="cell-2-1"></div>
-        <div class="cell" id="cell-2-2"></div>
+    <div class="main">
+        <h1>Tic Tac Toe</h1>
+        <div class="start-btn">Start</div>
+        <form class="players-names">
+            <h2>Names of each player</h2>
+            <label>
+                Player 1
+                <input name="name1" type="text" value="player1" placeholder="default: player1" autofocus>
+            </label>
+            <label>
+                Player 2
+                <input name="name2" type="text" value="player2" placeholder="default: player2">
+            </label>
+            <button type="submit" class="start-game-btn">
+                Start Game
+            </button>
+        </form>
+        <div class="header">
+            <div class="player1">
+                <div class="symbol">X</div>
+                <div class="info">
+                    <p>Player 1</p>
+                    <p>Score: 0</p>
+                </div>
+            </div>
+            <div class="play-btn">Play!</div>
+            <div class="player2">
+                <div class="symbol">O</div>
+                <div class="info">
+                    <p>Player 2</p>
+                    <p>Score: 0</p>
+                </div>
+            </div>
+        </div>
+        <div class="game-board">
+            <div class="cell" id="cell-0-0"></div>
+            <div class="cell" id="cell-0-1"></div>
+            <div class="cell" id="cell-0-2"></div>
+            <div class="cell" id="cell-1-0"></div>
+            <div class="cell" id="cell-1-1"></div>
+            <div class="cell" id="cell-1-2"></div>
+            <div class="cell" id="cell-2-0"></div>
+            <div class="cell" id="cell-2-1"></div>
+            <div class="cell" id="cell-2-2"></div>
+        </div>
+        <div class="status-box"></div>
     </div>
-    <div class="status-box"></div>
+
+    <footer>
+        &copy; <span id="year"></span> Manuel Cardosa
+    </footer>
 </body>
 </html>
