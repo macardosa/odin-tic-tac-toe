@@ -2,4 +2,4 @@
 
 Project part of the JavaScript course from [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-tic-tac-toe).
 
-## Attributions
+[Live demo](https://macardosa.github.io/odin-tic-tac-toe/)
